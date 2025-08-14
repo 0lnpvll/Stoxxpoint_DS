@@ -1,0 +1,42 @@
+Valuation of Stock Fair Value: A Comparative and Historical Approach
+
+The valuation of a stock’s fair value is a fundamental task for an investor aiming to determine the degree of undervaluation or overvaluation of a security in relation to current market conditions. The conventional methodology is based on applying financial multiples — P/E (Price-to-Earnings ratio), P/S (Price-to-Sales ratio), P/FCF (Price-to-Free Cash Flow ratio), EV/EBITDA, and other ratios. These tools provide comparability between companies based on their current and projected financial metrics.
+
+However, an alternative paradigm exists that shifts the focus from intercorporate comparisons to analyzing a company’s current multiples through the lens of its historical values. This approach more comprehensively accounts for fluctuations in market sentiment, brand strength, and the behavioral patterns of major institutional players.
+
+Conceptual Foundations: Historical Contextualization of Multiples
+In traditional equity analysis, companies are primarily compared to industry peers using multiples. However, this methodology may overlook significant qualitative factors that are not always quantifiable. For example, consumer preferences might demonstrate a strong loyalty to a particular company's products, disregarding competitors, even if the competitors have clear pricing advantages.
+
+Consider the illustrative example of the iPhone and Google Pixel. For a large portion of consumers, Apple’s products represent not just a technological solution but an integral element of their lifestyle. Even if the Pixel outperforms the iPhone on paper in terms of technical specifications, these consumers will invariably choose the iPhone. Thus, brand equity and consumer loyalty can significantly influence a company's market capitalization.
+
+Therefore, analyzing current multiples in comparison to their historical values allows for the integration of market sentiment and the evolution of the company's perception among the investment community. Stocks of companies with a consistently positive historical sentiment often trade at a premium to their multiples. This applies both to large institutional players and retail investors who may purchase shares not only based on financial metrics but also based on brand image and growth prospects.
+
+For instance, a company with a long history of successful performance and a positive reputation among investors may show elevated multiples even if its financial indicators are not outstanding. As a result, historical sentiment can have a significant impact on equity valuation.
+
+To implement this methodology, a set of multiples is typically used. For simplicity and visual clarity, several key ratios are presented in the chart: P/E, P/FCF, P/S, EV/EBITDA, P/B, and their aggregated value. As the analysis shows, when the average combined value reached its lowest levels, GOOGL stock represented the most attractive investment opportunity.
+
+Thus, a company that has historically been characterized by high multiples may be perceived by the market as more expensive, even if current results do not justify such expectations.
+
+Methodology for Calculating the Valuation Ratio
+Based on the analysis of multiples, a stock valuation ratio has been developed that reflects the degree of expensiveness or attractiveness of a stock relative to its historical data. For easier interpretation, the following grading scale is proposed:
+
+Ratio	Stock Valuation
+1	EXTREMELY EXPENSIVE
+2	VERY EXPENSIVE
+3	EXPENSIVE
+4	SLIGHTLY EXPENSIVE
+5	FAIR PRICE
+6	SLIGHTLY CHEAP
+7	CHEAP
+8	VERY CHEAP
+9	EXTREMELY CHEAP
+
+This scale helps investors better understand how current multiples deviate from historical averages. For example, if a company's stock shows an aggregate multiple significantly higher than the historical average, it may indicate overvaluation, classifying the stock as "very expensive." Conversely, a low aggregate multiple relative to historical values may suggest that the stock is "cheap."
+
+Limitations of the Methodology
+This approach requires a sufficiently long period of historical data to ensure statistical reliability, which can pose a challenge for companies that have recently gone public or undergone significant structural changes. Therefore, only companies with a market presence history (since the initial public offering) of over 4 years are selected for calculations.
+
+
+
+
+

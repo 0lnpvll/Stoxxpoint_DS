@@ -1,0 +1,7 @@
+The platform offers two primary methods for utilization:
+-Instantly retrieve the current stock valuation by entering the ticker symbol or company name in the search window.
+-Export a comprehensive stock list via the "Download Excel Data" feature for further analysis in Excel. Above is the structure of the Excel file as an example.
+
+
+
+
