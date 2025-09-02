@@ -873,7 +873,7 @@
     <!-- Header -->
     <header>
         <div class="logo-container">
-            <img src="Logo.png" alt="STOXXPOINT Logo" class="logo">
+            <img src="/Logo.png" alt="STOXXPOINT Logo" class="logo">
             <div class="brand-text">
                 <div class="brand-name">STOXXPOINT</div>
                 <div class="brand-tagline">Cheap or Pricey? See Now!</div>
@@ -958,7 +958,7 @@
                     <p class="methodology-subtitle">Our comprehensive approach to stock valuation</p>
                 </div>
                 
-                <img src="multi_chart.png" alt="Valuation Methodology Chart" class="methodology-image">
+                <img src="/multi_chart.png" alt="Valuation Methodology Chart" class="methodology-image">
                 
                 <div class="methodology-text" id="methodologyText">
                     Loading methodology information...
@@ -979,13 +979,13 @@
                 </div>
                 
                 <!-- Первая картинка и текст -->
-                <img src="points.png" alt="Points Explanation" class="howto-image" id="pointsImage">
+                <img src="/points.png" alt="Points Explanation" class="howto-image" id="pointsImage">
                 <div class="howto-text" id="pointsText">
                     Loading points explanation...
                 </div>
                 
                 <!-- Вторая картинка и текст -->
-                <img src="finviz.png" alt="Finviz Integration" class="howto-image" id="finvizImage">
+                <img src="/finviz.png" alt="Finviz Integration" class="howto-image" id="finvizImage">
                 <div class="howto-text" id="finvizText">
                     Loading Finviz explanation...
                 </div>
@@ -1570,7 +1570,7 @@
             showDataStatus("Loading stock data from points.xlsx...", "loading");
             
             try {
-                const response = await fetch('points.xlsx');
+                const response = await fetch('/points.xlsx');
                 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -1782,7 +1782,7 @@
         // Load methodology text from external file
         async function loadMethodologyText() {
             try {
-                const response = await fetch('Methodology.txt');
+                const response = await fetch('/Methodology.txt');
                 
                 if (!response.ok) {
                     throw new Error(`Failed to load methodology: ${response.status}`);
@@ -1818,13 +1818,13 @@ async function loadHowtoText() {
         const cacheBuster = `?t=${new Date().getTime()}`;
         
         // Загрузка первого текста (points.txt)
-        const pointsResponse = await fetch(`points.txt${cacheBuster}`);
+        const pointsResponse = await fetch(`/points.txt${cacheBuster}`);
         if (!pointsResponse.ok) throw new Error(`Failed to load points text: ${pointsResponse.status}`);
         const pointsTextContent = await pointsResponse.text();
         pointsText.innerHTML = pointsTextContent.replace(/\n/g, '<br>');
         
         // Загрузка второго текста (finviz.txt)
-        const finvizResponse = await fetch(`finviz.txt${cacheBuster}`);
+        const finvizResponse = await fetch(`/finviz.txt${cacheBuster}`);
         if (!finvizResponse.ok) throw new Error(`Failed to load finviz text: ${finvizResponse.status}`);
         const finvizTextContent = await finvizResponse.text();
         finvizText.innerHTML = finvizTextContent.replace(/\n/g, '<br>');
