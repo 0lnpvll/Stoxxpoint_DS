@@ -1565,68 +1565,71 @@
             }
         }
 
-        // Load initial data from points.xlsx
-        async function loadExcelFile() {
-            showDataStatus("Loading stock data from points.xlsx...", "loading");
-            
-            try {
-                const response = await fetch('/points.xlsx');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const arrayBuffer = await response.arrayBuffer();
-                const jsonData = processExcelData(arrayBuffer);
-                
-                // Получаем дату изменения файла из заголовков
-                const lastModified = response.headers.get('last-modified');
-                const fileDate = formatFileDate(lastModified);
-                
-                // Process data
-                stockData = jsonData.map(item => {
-                    // Convert price
-                    let priceValue = item.price;
-                    if (typeof priceValue === 'string') {
-                        priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
-                    }
-                    priceValue = parseFloat(priceValue);
-                    
-                    // Convert score
-                    let scoreValue = item.score;
-                    if (typeof scoreValue === 'string') {
-                        scoreValue = scoreValue.replace(/\D/g, '');
-                    }
-                    scoreValue = parseInt(scoreValue);
-                    
-                    return {
-                        ticker: item.ticker,
-                        company: item.company,
-                        price: isNaN(priceValue) ? 0 : priceValue,
-                        score: isNaN(scoreValue) ? 0 : scoreValue,
-                        label: item.label
-                    };
-                });
-                
-                console.log("Successfully loaded stocks:", stockData);
-                initTickerTape();
-                
-                // Обновляем текст с датой последнего обновления
-                lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
-                showDataStatus("Data loaded successfully!", "success");
-                
-                // Сохраняем дату для использования при загрузке sample data
-                window.fileDate = fileDate;
-            } catch (error) {
-                const errorMsg = `Error loading data: ${error.message}`;
-                showDataStatus(errorMsg, "error");
-                lastUpdated.textContent = "Data load failed!";
-                console.error(errorMsg, error);
-                
-                // Load sample data if real data fails
-                loadSampleData();
-            }
+
+// Load initial data from points.xlsx in Supabase Storage
+async function loadExcelFile() {
+    showDataStatus("Loading stock data from Supabase Storage...", "loading");
+    
+    try {
+        // Используем прямой URL к файлу в Supabase Storage
+        const fileUrl = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.xlsx';
+        const response = await fetch(fileUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        const arrayBuffer = await response.arrayBuffer();
+        const jsonData = processExcelData(arrayBuffer);
+        
+        // Получаем дату изменения файла из заголовков
+        const lastModified = response.headers.get('last-modified');
+        const fileDate = formatFileDate(lastModified);
+        
+        // Process data
+        stockData = jsonData.map(item => {
+            // Convert price
+            let priceValue = item.price;
+            if (typeof priceValue === 'string') {
+                priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
+            }
+            priceValue = parseFloat(priceValue);
+            
+            // Convert score
+            let scoreValue = item.score;
+            if (typeof scoreValue === 'string') {
+                scoreValue = scoreValue.replace(/\D/g, '');
+            }
+            scoreValue = parseInt(scoreValue);
+            
+            return {
+                ticker: item.ticker,
+                company: item.company,
+                price: isNaN(priceValue) ? 0 : priceValue,
+                score: isNaN(scoreValue) ? 0 : scoreValue,
+                label: item.label
+            };
+        });
+        
+        console.log("Successfully loaded stocks:", stockData);
+        initTickerTape();
+        
+        // Обновляем текст с датой последнего обновления
+        lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
+        showDataStatus("Data loaded successfully!", "success");
+        
+        // Сохраняем дату для использования при загрузке sample data
+        window.fileDate = fileDate;
+    } catch (error) {
+        const errorMsg = `Error loading data: ${error.message}`;
+        showDataStatus(errorMsg, "error");
+        lastUpdated.textContent = "Data load failed!";
+        console.error(errorMsg, error);
+        
+        // Load sample data if real data fails
+        loadSampleData();
+    }
+}
 
         // Load sample data
         function loadSampleData() {
@@ -1651,72 +1654,104 @@
             showDataStatus("Loaded sample data", "success");
         }
 
-        // Process uploaded Excel file
-        function processUploadedFile(file) {
-            showDataStatus("Processing uploaded file...", "loading");
+// Process uploaded Excel file and upload to Supabase
+function processUploadedFile(file) {
+    showDataStatus("Processing uploaded file...", "loading");
+    
+    const reader = new FileReader();
+    
+    reader.onload = async function(e) {
+        try {
+            const jsonData = processExcelData(e.target.result);
             
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                try {
-                    const jsonData = processExcelData(e.target.result);
-                    
-                    // Process data
-                    stockData = jsonData.map(item => {
-                        // Convert price
-                        let priceValue = item.price;
-                        if (typeof priceValue === 'string') {
-                            priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
-                        }
-                        priceValue = parseFloat(priceValue);
-                        
-                        // Convert score
-                        let scoreValue = item.score;
-                        if (typeof scoreValue === 'string') {
-                            scoreValue = scoreValue.replace(/\D/g, '');
-                        }
-                        scoreValue = parseInt(scoreValue);
-                        
-                        return {
-                            ticker: item.ticker,
-                            company: item.company,
-                            price: isNaN(priceValue) ? 0 : priceValue,
-                            score: isNaN(scoreValue) ? 0 : scoreValue,
-                            label: item.label
-                        };
-                    });
-                    
-                    console.log("Uploaded stocks:", stockData);
-                    initTickerTape();
-                    
-                    // Обновляем дату на текущую
-                    const fileDate = formatFileDate(new Date());
-                    lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
-                    
-                    localStorage.setItem('stockData', JSON.stringify(stockData));
-                    
-                    showDataStatus("Data uploaded successfully!", "success");
-                    showModalMessage("Data uploaded successfully!", "success");
-                    
-                    setTimeout(() => {
-                        adminPanelModal.style.display = 'none';
-                    }, 2000);
-                } catch (error) {
-                    const errorMsg = `Error processing file: ${error.message}`;
-                    showDataStatus(errorMsg, "error");
-                    showModalMessage(errorMsg, "error");
-                    console.error("File processing error:", error);
+            // Process data
+            stockData = jsonData.map(item => {
+                // Convert price
+                let priceValue = item.price;
+                if (typeof priceValue === 'string') {
+                    priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
                 }
-            };
+                priceValue = parseFloat(priceValue);
+                
+                // Convert score
+                let scoreValue = item.score;
+                if (typeof scoreValue === 'string') {
+                    scoreValue = scoreValue.replace(/\D/g, '');
+                }
+                scoreValue = parseInt(scoreValue);
+                
+                return {
+                    ticker: item.ticker,
+                    company: item.company,
+                    price: isNaN(priceValue) ? 0 : priceValue,
+                    score: isNaN(scoreValue) ? 0 : scoreValue,
+                    label: item.label
+                };
+            });
             
-            reader.onerror = function() {
-                const errorMsg = "Error reading file!";
-                showDataStatus(errorMsg, "error");
-                showModalMessage(errorMsg, "error");
-            };
+            console.log("Uploaded stocks:", stockData);
+            initTickerTape();
             
-            reader.readAsArrayBuffer(file);
+            // Обновляем дату на текущую
+            const fileDate = formatFileDate(new Date());
+            lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
+            
+            // Save to localStorage as backup
+            localStorage.setItem('stockData', JSON.stringify(stockData));
+            
+            // Upload to Supabase Storage
+            await uploadToSupabase(file);
+            
+            showDataStatus("Data uploaded successfully!", "success");
+            showModalMessage("Data uploaded successfully!", "success");
+            
+            setTimeout(() => {
+                adminPanelModal.style.display = 'none';
+            }, 2000);
+        } catch (error) {
+            const errorMsg = `Error processing file: ${error.message}`;
+            showDataStatus(errorMsg, "error");
+            showModalMessage(errorMsg, "error");
+            console.error("File processing error:", error);
         }
+    };
+    
+    reader.onerror = function() {
+        const errorMsg = "Error reading file!";
+        showDataStatus(errorMsg, "error");
+        showModalMessage(errorMsg, "error");
+    };
+    
+    reader.readAsArrayBuffer(file);
+}
+
+// Upload file to Supabase Storage
+async function uploadToSupabase(file) {
+    try {
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmcXRxampzYWd3Y2JoeXp6cm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM1MDY0NjQsImV4cCI6MjAzOTA4MjQ2NH0.0LJ6N2u7eUT0lU6Deez5p6lJ9jNwL7pzN8n7J8lZ7kI';
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Upload file to Supabase Storage
+        const { data, error } = await supabase.storage
+            .from('uploads')
+            .upload('points.xlsx', file, {
+                cacheControl: '3600',
+                upsert: true
+            });
+        
+        if (error) {
+            throw new Error(`Supabase upload error: ${error.message}`);
+        }
+        
+        console.log("File uploaded to Supabase:", data);
+        return true;
+    } catch (error) {
+        console.error("Supabase upload error:", error);
+        throw error;
+    }
+}
 
         // Auth functions
         function loginUser(email, password) {
@@ -2090,6 +2125,35 @@ async function loadHowtoText() {
             loadMethodologyText();
             loadHowtoText(); // Загрузка текста для раздела How to Use
         }
+
+
+// Upload file to Supabase Storage
+async function uploadToSupabase(file) {
+    try {
+        // Initialize Supabase
+        const SUPABASE_URL = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmcXRxampzYWd3Y2JoeXp6cm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM1MDY0NjQsImV4cCI6MjAzOTA4MjQ2NH0.0LJ6N2u7eUT0lU6Deez5p6lJ9jNwL7pzN8n7J8lZ7kI';
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Upload file to Supabase Storage
+        const { data, error } = await supabase.storage
+            .from('uploads')
+            .upload('points.xlsx', file, {
+                cacheControl: '3600',
+                upsert: true
+            });
+        
+        if (error) {
+            throw new Error(`Supabase upload error: ${error.message}`);
+        }
+        
+        console.log("File uploaded to Supabase:", data);
+        return true;
+    } catch (error) {
+        console.error("Supabase upload error:", error);
+        throw error;
+    }
+}
 
         window.addEventListener('DOMContentLoaded', init);
     </script>

@@ -1,2 +1,18 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Standard to use for all files that are text
+* text eol=lf
+
+# Explicitly declare text files
+*.html text
+*.css text
+*.js text
+*.txt text
+
+# Denote all files that are truly binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
