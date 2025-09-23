@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="data:,">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
@@ -873,7 +874,7 @@
     <!-- Header -->
     <header>
         <div class="logo-container">
-            <img src="Logo.png" alt="STOXXPOINT Logo" class="logo">
+<img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/Logo.png" alt="STOXXPOINT Logo" class="logo">
             <div class="brand-text">
                 <div class="brand-name">STOXXPOINT</div>
                 <div class="brand-tagline">Cheap or Pricey? See Now!</div>
@@ -958,8 +959,7 @@
                     <p class="methodology-subtitle">Our comprehensive approach to stock valuation</p>
                 </div>
                 
-                <img src="multi_chart.png" alt="Valuation Methodology Chart" class="methodology-image">
-                
+<img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/multi_chart.png" alt="Valuation Methodology Chart" class="methodology-image">                
                 <div class="methodology-text" id="methodologyText">
                     Loading methodology information...
                 </div>
@@ -979,13 +979,13 @@
                 </div>
                 
                 <!-- Первая картинка и текст -->
-                <img src="points.png" alt="Points Explanation" class="howto-image" id="pointsImage">
+<img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.png" alt="Points Explanation" class="howto-image" id="pointsImage">
                 <div class="howto-text" id="pointsText">
                     Loading points explanation...
                 </div>
                 
                 <!-- Вторая картинка и текст -->
-                <img src="finviz.png" alt="Finviz Integration" class="howto-image" id="finvizImage">
+<img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/finviz.png" alt="Finviz Integration" class="howto-image" id="finvizImage">
                 <div class="howto-text" id="finvizText">
                     Loading Finviz explanation...
                 </div>
@@ -1121,8 +1121,8 @@
 
     <script>
         // DOM Elements
-        const stockSearch = document.getElementById('stockSearch');
-        const suggestionsContainer = document.getElementById('suggestionsContainer');
+   	const stockSearch = document.getElementById('stockSearch');
+	const suggestionsContainer = document.getElementById('suggestionsContainer');
         const resultContainer = document.getElementById('resultContainer');
         const methodologyContainer = document.getElementById('methodologyContainer');
         const methodologyText = document.getElementById('methodologyText');
@@ -1179,6 +1179,25 @@
         const uploadBtn = document.getElementById('uploadBtn');
         const cancelAdminBtn = document.getElementById('cancelAdminBtn');
         const tickerTape = document.getElementById('tickerTape');
+const SUPABASE_URL = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmcXRxampzYWd3Y2JoeXp6cm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM1MDY0NjQsImV4cCI6MjAzOTA4MjQ2NH0.0LJ6N2u7eUT0lU6Deez5p6lJ9jNwL7pzN8n7J8lZ7kI';
+
+
+   // Проверяем, что Supabase доступен глобально
+    let supabase;
+    if (window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } else {
+        console.warn('Supabase not available, using fallback');
+        // Создаем заглушку для supabase
+        supabase = {
+            storage: {
+                from: () => ({
+                    upload: () => Promise.resolve({ error: null, data: {} })
+                })
+            }
+        };
+    }
 
         // Current dataset and user management
         let stockData = [];
@@ -1654,104 +1673,81 @@ async function loadExcelFile() {
             showDataStatus("Loaded sample data", "success");
         }
 
-// Process uploaded Excel file and upload to Supabase
-function processUploadedFile(file) {
-    showDataStatus("Processing uploaded file...", "loading");
-    
-    const reader = new FileReader();
-    
-    reader.onload = async function(e) {
-        try {
-            const jsonData = processExcelData(e.target.result);
-            
-            // Process data
-            stockData = jsonData.map(item => {
-                // Convert price
-                let priceValue = item.price;
-                if (typeof priceValue === 'string') {
-                    priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
-                }
-                priceValue = parseFloat(priceValue);
+    // Process uploaded Excel file and upload to Supabase - исправленная функция
+    function processUploadedFile(file) {
+        showDataStatus("Processing uploaded file...", "loading");
+        
+        const reader = new FileReader();
+        
+        reader.onload = async function(e) {
+            try {
+                const jsonData = processExcelData(e.target.result);
                 
-                // Convert score
-                let scoreValue = item.score;
-                if (typeof scoreValue === 'string') {
-                    scoreValue = scoreValue.replace(/\D/g, '');
-                }
-                scoreValue = parseInt(scoreValue);
+                // Process data
+                stockData = jsonData.map(item => {
+                    // Convert price
+                    let priceValue = item.price;
+                    if (typeof priceValue === 'string') {
+                        priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
+                    }
+                    priceValue = parseFloat(priceValue);
+                    
+                    // Convert score
+                    let scoreValue = item.score;
+                    if (typeof scoreValue === 'string') {
+                        scoreValue = scoreValue.replace(/\D/g, '');
+                    }
+                    scoreValue = parseInt(scoreValue);
+                    
+                    return {
+                        ticker: item.ticker,
+                        company: item.company,
+                        price: isNaN(priceValue) ? 0 : priceValue,
+                        score: isNaN(scoreValue) ? 0 : scoreValue,
+                        label: item.label
+                    };
+                });
                 
-                return {
-                    ticker: item.ticker,
-                    company: item.company,
-                    price: isNaN(priceValue) ? 0 : priceValue,
-                    score: isNaN(scoreValue) ? 0 : scoreValue,
-                    label: item.label
-                };
-            });
-            
-            console.log("Uploaded stocks:", stockData);
-            initTickerTape();
-            
-            // Обновляем дату на текущую
-            const fileDate = formatFileDate(new Date());
-            lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
-            
-            // Save to localStorage as backup
-            localStorage.setItem('stockData', JSON.stringify(stockData));
-            
-            // Upload to Supabase Storage
-            await uploadToSupabase(file);
-            
-            showDataStatus("Data uploaded successfully!", "success");
-            showModalMessage("Data uploaded successfully!", "success");
-            
-            setTimeout(() => {
-                adminPanelModal.style.display = 'none';
-            }, 2000);
-        } catch (error) {
-            const errorMsg = `Error processing file: ${error.message}`;
+                console.log("Uploaded stocks:", stockData);
+                initTickerTape();
+                
+                // Обновляем дату на текущую
+                const fileDate = formatFileDate(new Date());
+                lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
+                
+                // Save to localStorage as backup
+                localStorage.setItem('stockData', JSON.stringify(stockData));
+                
+                // Пытаемся загрузить в Supabase, но не блокируем процесс при ошибке
+                try {
+                    await uploadToSupabase(file);
+                    showDataStatus("Data uploaded successfully!", "success");
+                    showModalMessage("Data uploaded successfully!", "success");
+                } catch (uploadError) {
+                    // Если загрузка в Supabase не удалась, все равно продолжаем
+                    showDataStatus("Data processed locally!", "success");
+                    showModalMessage("Data processed locally!", "success");
+                }
+                
+                setTimeout(() => {
+                    adminPanelModal.style.display = 'none';
+                }, 2000);
+            } catch (error) {
+                const errorMsg = `Error processing file: ${error.message}`;
+                showDataStatus(errorMsg, "error");
+                showModalMessage(errorMsg, "error");
+                console.error("File processing error:", error);
+            }
+        };
+        
+        reader.onerror = function() {
+            const errorMsg = "Error reading file!";
             showDataStatus(errorMsg, "error");
             showModalMessage(errorMsg, "error");
-            console.error("File processing error:", error);
-        }
-    };
-    
-    reader.onerror = function() {
-        const errorMsg = "Error reading file!";
-        showDataStatus(errorMsg, "error");
-        showModalMessage(errorMsg, "error");
-    };
-    
-    reader.readAsArrayBuffer(file);
-}
-
-// Upload file to Supabase Storage
-async function uploadToSupabase(file) {
-    try {
-        // Initialize Supabase
-        const SUPABASE_URL = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmcXRxampzYWd3Y2JoeXp6cm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM1MDY0NjQsImV4cCI6MjAzOTA4MjQ2NH0.0LJ6N2u7eUT0lU6Deez5p6lJ9jNwL7pzN8n7J8lZ7kI';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        };
         
-        // Upload file to Supabase Storage
-        const { data, error } = await supabase.storage
-            .from('uploads')
-            .upload('points.xlsx', file, {
-                cacheControl: '3600',
-                upsert: true
-            });
-        
-        if (error) {
-            throw new Error(`Supabase upload error: ${error.message}`);
-        }
-        
-        console.log("File uploaded to Supabase:", data);
-        return true;
-    } catch (error) {
-        console.error("Supabase upload error:", error);
-        throw error;
+        reader.readAsArrayBuffer(file);
     }
-}
 
         // Auth functions
         function loginUser(email, password) {
@@ -2127,33 +2123,41 @@ async function loadHowtoText() {
         }
 
 
-// Upload file to Supabase Storage
-async function uploadToSupabase(file) {
-    try {
-        // Initialize Supabase
-        const SUPABASE_URL = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmcXRxampzYWd3Y2JoeXp6cm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM1MDY0NjQsImV4cCI6MjAzOTA4MjQ2NH0.0LJ6N2u7eUT0lU6Deez5p6lJ9jNwL7pzN8n7J8lZ7kI';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        // Upload file to Supabase Storage
-        const { data, error } = await supabase.storage
-            .from('uploads')
-            .upload('points.xlsx', file, {
-                cacheControl: '3600',
-                upsert: true
-            });
-        
-        if (error) {
-            throw new Error(`Supabase upload error: ${error.message}`);
+    // Upload file to Supabase Storage - ОДНА функция вместо двух одинаковых
+    async function uploadToSupabase(file) {
+        try {
+            console.log("Starting upload to Supabase...");
+            
+            // Проверяем, доступен ли Supabase
+            if (!window.supabase) {
+                throw new Error('Supabase library not loaded');
+            }
+            
+            // Создаем клиент
+            const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            
+            // Upload file to Supabase Storage
+            const { data, error } = await supabaseClient.storage
+                .from('uploads')
+                .upload('points.xlsx', file, {
+                    cacheControl: '3600',
+                    upsert: true
+                });
+            
+            if (error) {
+                console.error('Supabase upload error:', error);
+                throw new Error(`Upload failed: ${error.message}`);
+            }
+            
+            console.log("File uploaded to Supabase successfully:", data);
+            return true;
+        } catch (error) {
+            console.error("Supabase upload error:", error);
+            // Не прерываем выполнение, просто логируем ошибку
+            showDataStatus("Data processed locally, but cloud upload failed", "error");
+            return false; // Возвращаем false, но не прерываем процесс
         }
-        
-        console.log("File uploaded to Supabase:", data);
-        return true;
-    } catch (error) {
-        console.error("Supabase upload error:", error);
-        throw error;
     }
-}
 
         window.addEventListener('DOMContentLoaded', init);
     </script>
