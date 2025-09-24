@@ -1618,9 +1618,10 @@ const SUPABASE_URL = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co';
 async function loadExcelFile() {
     showDataStatus("Loading stock data from Supabase Storage...", "loading");
     
-    try {
-        // Используем прямой URL к файлу в Supabase Storage
-        const fileUrl = 'https://stoxxpoint.vercel.app/points.xlsx';
+ try {
+        // Используйте Supabase URL
+        const fileUrl = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.xlsx';
+        
         const response = await fetch(fileUrl);
         
         if (!response.ok) {
