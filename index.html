@@ -799,15 +799,6 @@
             font-size: 16px;
         }
 
-        .methodology-image, .howto-image {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            margin: 0 auto 20px;
-            display: block;
-        }
-
         .methodology-text, .howto-text {
             color: var(--light-gray);
             line-height: 1.7;
@@ -864,6 +855,26 @@
             font-size: 36px; 
             margin-bottom: 1px; 
             text-align: center;
+        }
+
+        .image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .content-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+        
+        .image-caption {
+            color: var(--light-gray);
+            font-size: 14px;
+            font-style: italic;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -959,7 +970,13 @@
                     <p class="methodology-subtitle">Our comprehensive approach to stock valuation</p>
                 </div>
                 
-<img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/multi_chart.png" alt="Valuation Methodology Chart" class="methodology-image">                
+<div class="image-container">
+    <img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/multi_chart.png" 
+         alt="Valuation Methodology Chart" 
+         class="content-image">
+    <div class="image-caption">Our multi-factor valuation approach</div>
+</div>
+                
                 <div class="methodology-text" id="methodologyText">
                     Loading methodology information...
                 </div>
@@ -985,7 +1002,13 @@
                 </div>
                 
                 <!-- Вторая картинка и текст -->
-<img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/finviz.png" alt="Finviz Integration" class="howto-image" id="finvizImage">
+
+<div class="image-container">
+    <img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/finviz.png" 
+         alt="Finviz Integration" 
+         class="content-image">
+    <div class="image-caption">Integrating with Finviz for advanced screening</div>
+</div>
                 <div class="howto-text" id="finvizText">
                     Loading Finviz explanation...
                 </div>
@@ -2122,6 +2145,24 @@ async function loadHowtoText() {
             loadHowtoText(); // Загрузка текста для раздела How to Use
         }
 
+ function checkImageLoading() {
+            const images = document.querySelectorAll('.content-image');
+            images.forEach(img => {
+                img.onload = function() {
+                    console.log('Image loaded successfully:', img.src);
+                };
+                img.onerror = function() {
+                    console.error('Failed to load image:', img.src);
+                    // Fallback на альтернативный текст если изображение не загружается
+                    img.style.display = 'none';
+                    const caption = img.nextElementSibling;
+                    if (caption && caption.classList.contains('image-caption')) {
+                        caption.textContent = 'Image not available: ' + img.alt;
+                        caption.style.color = 'var(--orange)';
+                    }
+                };
+            });
+        }
 
     // Upload file to Supabase Storage - ОДНА функция вместо двух одинаковых
     async function uploadToSupabase(file) {
