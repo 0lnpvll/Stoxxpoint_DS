@@ -2143,32 +2143,55 @@ async function loadHowtoText() {
         }
 
         // Initialize the page
-        function init() {
-            // Load data
-            loadExcelFile();
-            updateAuthUI();
-            loadMethodologyText();
-            loadHowtoText(); // Загрузка текста для раздела How to Use
-        }
+function init() {
+    // Load data
+    loadExcelFile();
+    updateAuthUI();
+    loadMethodologyText();
+    loadHowtoText(); // Загрузка текста для раздела How to Use
+    
+    // Проверка загрузки изображений с задержкой
+    setTimeout(() => {
+        checkImageLoading();
+        debugImageLoading(); // Добавляем отладку
+    }, 2000);
+}
 
- function checkImageLoading() {
-            const images = document.querySelectorAll('.content-image');
-            images.forEach(img => {
-                img.onload = function() {
-                    console.log('Image loaded successfully:', img.src);
-                };
-                img.onerror = function() {
-                    console.error('Failed to load image:', img.src);
-                    // Fallback на альтернативный текст если изображение не загружается
-                    img.style.display = 'none';
-                    const caption = img.nextElementSibling;
-                    if (caption && caption.classList.contains('image-caption')) {
-                        caption.textContent = 'Image not available: ' + img.alt;
-                        caption.style.color = 'var(--orange)';
-                    }
-                };
-            });
+function checkImageLoading() {
+    const images = document.querySelectorAll('.content-image');
+    console.log(`Found ${images.length} images to check`);
+    
+    images.forEach((img, index) => {
+        console.log(`Image ${index + 1}: ${img.src}`);
+        
+        if (img.complete) {
+            if (img.naturalHeight === 0) {
+                console.error(`Image failed to load: ${img.src}`);
+                handleImageError(img);
+            } else {
+                console.log(`Image already loaded: ${img.src}`);
+            }
+        } else {
+            img.onload = function() {
+                console.log(`✓ Image loaded successfully: ${img.src}`);
+            };
+            img.onerror = function() {
+                console.error(`✗ Failed to load image: ${img.src}`);
+                handleImageError(img);
+            };
         }
+    });
+}
+
+function handleImageError(img) {
+    img.style.display = 'none';
+    const caption = img.nextElementSibling;
+    if (caption && caption.classList.contains('image-caption')) {
+        caption.textContent = 'Image not available: ' + img.alt;
+        caption.style.color = 'var(--orange)';
+        caption.style.fontWeight = 'bold';
+    }
+}
 
     // Upload file to Supabase Storage - ОДНА функция вместо двух одинаковых
     async function uploadToSupabase(file) {
@@ -2205,6 +2228,31 @@ async function loadHowtoText() {
             return false; // Возвращаем false, но не прерываем процесс
         }
     }
+
+// Функция для проверки загрузки изображений
+function debugImageLoading() {
+    console.log('Checking image URLs...');
+    
+    const imageUrls = [
+        'https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/multi_chart.png',
+        'https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.png',
+        'https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/finviz.png'
+    ];
+    
+    imageUrls.forEach(url => {
+        fetch(url)
+            .then(response => {
+                console.log(`✓ ${url}: ${response.status} ${response.statusText}`);
+            })
+            .catch(error => {
+                console.error(`✗ ${url}: ${error.message}`);
+            });
+    });
+}
+
+// Вызовите эту функцию после init()
+setTimeout(debugImageLoading, 2000);
+
 
         window.addEventListener('DOMContentLoaded', init);
     </script>
