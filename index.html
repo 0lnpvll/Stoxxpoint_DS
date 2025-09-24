@@ -885,7 +885,7 @@
     <!-- Header -->
     <header>
         <div class="logo-container">
-<img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/Logo.png" alt="STOXXPOINT Logo" class="logo">
+<img src="https://stoxxpoint.vercel.app/Logo.png" alt="STOXXPOINT Logo" class="logo">
             <div class="brand-text">
                 <div class="brand-name">STOXXPOINT</div>
                 <div class="brand-tagline">Cheap or Pricey? See Now!</div>
@@ -971,9 +971,9 @@
                 </div>
                 
 <div class="image-container">
-    <img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/multi_chart.png" 
-         alt="Valuation Methodology Chart" 
-         class="content-image">
+<img src="https://stoxxpoint.vercel.app/multi_chart.png" 
+     alt="Valuation Methodology Chart" 
+     class="content-image">
     <div class="image-caption">Our multi-factor valuation approach</div>
 </div>
                 
@@ -997,9 +997,9 @@
                 
                 <!-- Первая картинка и текст -->
 <div class="image-container">
-    <img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.png" 
-         alt="Points Explanation" 
-         class="content-image">
+<img src="https://stoxxpoint.vercel.app/points.png" 
+     alt="Points Explanation" 
+     class="content-image">
     <div class="image-caption">Understanding our 1-9 point valuation system</div>
 </div>
 
@@ -1010,9 +1010,9 @@
                 <!-- Вторая картинка и текст -->
 
 <div class="image-container">
-    <img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/finviz.png" 
-         alt="Finviz Integration" 
-         class="content-image">
+<img src="https://stoxxpoint.vercel.app/finviz.png" 
+     alt="Finviz Integration" 
+     class="content-image">
     <div class="image-caption">Integrating with Finviz for advanced screening</div>
 </div>
                 <div class="howto-text" id="finvizText">
@@ -1620,7 +1620,7 @@ async function loadExcelFile() {
     
     try {
         // Используем прямой URL к файлу в Supabase Storage
-        const fileUrl = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.xlsx';
+        const fileUrl = 'https://stoxxpoint.vercel.app/points.xlsx';
         const response = await fetch(fileUrl);
         
         if (!response.ok) {
@@ -1842,8 +1842,7 @@ async function loadExcelFile() {
         // Load methodology text from external file
         async function loadMethodologyText() {
             try {
-                const response = await fetch('/Methodology.txt');
-                
+const response = await fetch('https://stoxxpoint.vercel.app/Methodology.txt');                
                 if (!response.ok) {
                     throw new Error(`Failed to load methodology: ${response.status}`);
                 }
@@ -1878,13 +1877,13 @@ async function loadHowtoText() {
         const cacheBuster = `?t=${new Date().getTime()}`;
         
         // Загрузка первого текста (points.txt)
-        const pointsResponse = await fetch(`/points.txt${cacheBuster}`);
+const pointsResponse = await fetch(`https://stoxxpoint.vercel.app/points.txt${cacheBuster}`);
         if (!pointsResponse.ok) throw new Error(`Failed to load points text: ${pointsResponse.status}`);
         const pointsTextContent = await pointsResponse.text();
         pointsText.innerHTML = pointsTextContent.replace(/\n/g, '<br>');
         
         // Загрузка второго текста (finviz.txt)
-        const finvizResponse = await fetch(`/finviz.txt${cacheBuster}`);
+const finvizResponse = await fetch(`https://stoxxpoint.vercel.app/finviz.txt${cacheBuster}`);
         if (!finvizResponse.ok) throw new Error(`Failed to load finviz text: ${finvizResponse.status}`);
         const finvizTextContent = await finvizResponse.text();
         finvizText.innerHTML = finvizTextContent.replace(/\n/g, '<br>');
