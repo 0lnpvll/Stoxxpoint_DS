@@ -133,13 +133,13 @@
             display: flex;
             align-items: center;
             gap: 30px;
-            margin-left: auto;
+            margin-left: auto; /* Выравнивание навигации по правому краю */
         }
 
         .nav-links {
             display: flex;
             gap: 30px;
-            justify-content: flex-end;
+            justify-content: flex-end; /* Выравнивание ссылок по правому краю */
         }
 
         .nav-links a {
@@ -326,7 +326,7 @@
             transform: translateY(0);
         }
 
-        /* Gauge container */
+        /* Gauge container - широкая версия */
         .gauge-container {
             width: 90%;
             max-width: 800px;
@@ -755,14 +755,14 @@
             transform: translateY(0);
         }
 
-        /* Кнопка "Back to Search" */
+        /* Кнопка "Back to Search" - восстановлены оригинальные стили */
         .back-to-search {
             position: absolute;
             top: 15px;
             right: 15px;
             background: transparent;
             border: none;
-            color: var(--light-blue);
+            color: var(--light-blue); /* Светло-синий цвет */
             cursor: pointer;
             font-size: 14px;
             display: flex;
@@ -773,7 +773,7 @@
         }
 
         .back-to-search:hover {
-            color: var(--orange);
+            color: var(--orange); /* Оранжевый при наведении */
         }
 
         .methodology-content, .howto-content {
@@ -885,7 +885,7 @@
     <!-- Header -->
     <header>
         <div class="logo-container">
-            <img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/Logo.png" alt="STOXXPOINT Logo" class="logo">
+<img src="Logo.png" alt="STOXXPOINT Logo" class="logo">
             <div class="brand-text">
                 <div class="brand-name">STOXXPOINT</div>
                 <div class="brand-tagline">Cheap or Pricey? See Now!</div>
@@ -895,7 +895,7 @@
         <div class="nav-right">
             <nav class="nav-links">
                 <a href="#" id="methodologyLink">Evaluation Methodology</a>
-                <a href="#" id="howtoLink">How to Use</a>
+                <a href="#" id="howtoLink">How to Use</a> <!-- Добавлена новая ссылка -->
                 <a href="#">Donate</a>
             </nav>
             
@@ -970,12 +970,12 @@
                     <p class="methodology-subtitle">Our comprehensive approach to stock valuation</p>
                 </div>
                 
-                <div class="image-container">
-                    <img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/multi_chart.png" 
-                         alt="Valuation Methodology Chart" 
-                         class="content-image">
-                    <div class="image-caption">Our multi-factor valuation approach</div>
-                </div>
+<div class="image-container">
+<img src="multi_chart.png"
+     alt="Valuation Methodology Chart" 
+     class="content-image">
+    <div class="image-caption">Our multi-factor valuation approach</div>
+</div>
                 
                 <div class="methodology-text" id="methodologyText">
                     Loading methodology information...
@@ -996,25 +996,25 @@
                 </div>
                 
                 <!-- Первая картинка и текст -->
-                <div class="image-container">
-                    <img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.png" 
-                         alt="Points Explanation" 
-                         class="content-image">
-                    <div class="image-caption">Understanding our 1-9 point valuation system</div>
-                </div>
+<div class="image-container">
+<img src="points.png"
+     alt="Points Explanation" 
+     class="content-image">
+    <div class="image-caption">Understanding our 1-9 point valuation system</div>
+</div>
 
                 <div class="howto-text" id="pointsText">
                     Loading points explanation...
                 </div>
                 
                 <!-- Вторая картинка и текст -->
-                <div class="image-container">
-                    <img src="https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/finviz.png" 
-                         alt="Finviz Integration" 
-                         class="content-image">
-                    <div class="image-caption">Integrating with Finviz for advanced screening</div>
-                </div>
-                
+
+<div class="image-container">
+<img src="finviz.png"
+     alt="Finviz Integration" 
+     class="content-image">
+    <div class="image-caption">Integrating with Finviz for advanced screening</div>
+</div>
                 <div class="howto-text" id="finvizText">
                     Loading Finviz explanation...
                 </div>
@@ -1053,13 +1053,13 @@
             <!-- Форма входа -->
             <div id="loginForm">
                 <div class="input-group">
-                    <label for="loginEmail">Email Address</label>
-                    <input type="email" id="loginEmail" placeholder="Enter your email">
+                    <label for="authEmail">Email Address</label>
+                    <input type="email" id="authEmail" placeholder="Enter your email">
                 </div>
                 
                 <div class="input-group">
-                    <label for="loginPassword">Password</label>
-                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                    <label for="authPassword">Password</label>
+                    <input type="password" id="authPassword" placeholder="Enter your password">
                 </div>
                 
                 <div class="modal-buttons">
@@ -1076,23 +1076,23 @@
             <!-- Форма регистрации -->
             <div id="registerForm" style="display: none;">
                 <div class="input-group">
-                    <label for="registerName">Full Name</label>
-                    <input type="text" id="registerName" placeholder="Enter your full name">
+                    <label for="regName">Full Name</label>
+                    <input type="text" id="regName" placeholder="Enter your full name">
                 </div>
                 
                 <div class="input-group">
-                    <label for="registerEmail">Email Address</label>
-                    <input type="email" id="registerEmail" placeholder="Enter your email">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" placeholder="Enter your email">
                 </div>
                 
                 <div class="input-group">
-                    <label for="registerPassword">Create Password</label>
-                    <input type="password" id="registerPassword" placeholder="Create a password">
+                    <label for="regPassword">Create Password</label>
+                    <input type="password" id="regPassword" placeholder="Create a password">
                 </div>
                 
                 <div class="input-group">
-                    <label for="registerPasswordConfirm">Confirm Password</label>
-                    <input type="password" id="registerPasswordConfirm" placeholder="Confirm your password">
+                    <label for="regPasswordConfirm">Confirm Password</label>
+                    <input type="password" id="regPasswordConfirm" placeholder="Confirm your password">
                 </div>
                 
                 <div class="modal-buttons">
@@ -1150,18 +1150,18 @@
 
     <script>
         // DOM Elements
-        const stockSearch = document.getElementById('stockSearch');
-        const suggestionsContainer = document.getElementById('suggestionsContainer');
+   	const stockSearch = document.getElementById('stockSearch');
+	const suggestionsContainer = document.getElementById('suggestionsContainer');
         const resultContainer = document.getElementById('resultContainer');
         const methodologyContainer = document.getElementById('methodologyContainer');
         const methodologyText = document.getElementById('methodologyText');
         const methodologyLink = document.getElementById('methodologyLink');
         const backToSearchFromMethodology = document.getElementById('backToSearchFromMethodology');
-        const howtoContainer = document.getElementById('howtoContainer');
-        const howtoLink = document.getElementById('howtoLink');
-        const backToSearchFromHowto = document.getElementById('backToSearchFromHowto');
-        const pointsText = document.getElementById('pointsText');
-        const finvizText = document.getElementById('finvizText');
+        const howtoContainer = document.getElementById('howtoContainer'); // Новый контейнер
+        const howtoLink = document.getElementById('howtoLink'); // Новая ссылка
+        const backToSearchFromHowto = document.getElementById('backToSearchFromHowto'); // Кнопка возврата
+        const pointsText = document.getElementById('pointsText'); // Текст для points
+        const finvizText = document.getElementById('finvizText'); // Текст для finviz
         const errorMessage = document.getElementById('errorMessage');
         const downloadBtn = document.getElementById('downloadBtn');
         const adminLoginBtn = document.getElementById('adminLoginBtn');
@@ -1180,19 +1180,19 @@
         const gaugeForeground = document.querySelector('.gauge-foreground');
         const mainContent = document.getElementById('mainContent');
 
-        // Auth elements - исправлены ID для устранения дублирования
-        const loginEmail = document.getElementById('loginEmail');
-        const loginPassword = document.getElementById('loginPassword');
+        // Auth elements
+        const authEmail = document.getElementById('authEmail');
+        const authPassword = document.getElementById('authPassword');
         const loginBtn = document.getElementById('loginBtn');
         const cancelBtn = document.getElementById('cancelBtn');
         const switchToRegister = document.getElementById('switchToRegister');
         const switchToLogin = document.getElementById('switchToLogin');
         const switchToForgot = document.getElementById('switchToForgot');
         const switchToLoginFromForgot = document.getElementById('switchToLoginFromForgot');
-        const registerName = document.getElementById('registerName');
-        const registerEmail = document.getElementById('registerEmail');
-        const registerPassword = document.getElementById('registerPassword');
-        const registerPasswordConfirm = document.getElementById('registerPasswordConfirm');
+        const regName = document.getElementById('regName');
+        const regEmail = document.getElementById('regEmail');
+        const regPassword = document.getElementById('regPassword');
+        const regPasswordConfirm = document.getElementById('regPasswordConfirm');
         const registerBtn = document.getElementById('registerBtn');
         const cancelRegBtn = document.getElementById('cancelRegBtn');
         const forgotEmail = document.getElementById('forgotEmail');
@@ -1208,36 +1208,38 @@
         const uploadBtn = document.getElementById('uploadBtn');
         const cancelAdminBtn = document.getElementById('cancelAdminBtn');
         const tickerTape = document.getElementById('tickerTape');
+const SUPABASE_URL = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmcXRxampzYWd3Y2JoeXp6cm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM1MDY0NjQsImV4cCI6MjAzOTA4MjQ2NH0.0LJ6N2u7eUT0lU6Deez5p6lJ9jNwL7pzN8n7J8lZ7kI';
 
-        const SUPABASE_URL = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmcXRxampzYWd3Y2JoeXp6cm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM1MDY0NjQsImV4cCI6MjAzOTA4MjQ2NH0.0LJ6N2u7eUT0lU6Deez5p6lJ9jNwL7pzN8n7J8lZ7kI';
 
-        // Проверяем, что Supabase доступен глобально
-        let supabase;
-        if (window.supabase) {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        } else {
-            console.warn('Supabase not available, using fallback');
-            supabase = {
-                storage: {
-                    from: () => ({
-                        upload: () => Promise.resolve({ error: null, data: {} })
-                    })
-                }
-            };
-        }
+   // Проверяем, что Supabase доступен глобально
+    let supabase;
+    if (window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } else {
+        console.warn('Supabase not available, using fallback');
+        // Создаем заглушку для supabase
+        supabase = {
+            storage: {
+                from: () => ({
+                    upload: () => Promise.resolve({ error: null, data: {} })
+                })
+            }
+        };
+    }
 
         // Current dataset and user management
         let stockData = [];
         let currentUser = null;
         const users = JSON.parse(localStorage.getItem('stoxxpointUsers') || '[]');
-        const adminPass = "admin123";
+        const adminPass = "admin123"; // Только для демо-версии
         
+        // Добавим администратора, если его нет
         if (!users.some(u => u.email === "admin@stoxxpoint.com")) {
             users.push({
                 name: "Administrator",
                 email: "admin@stoxxpoint.com",
-                password: adminPass,
+                password: adminPass, // В реальной системе пароль должен храниться в хешированном виде
                 role: "admin"
             });
             localStorage.setItem('stoxxpointUsers', JSON.stringify(users));
@@ -1373,9 +1375,11 @@
         function createSpeedometerBackground() {
             const ctx = speedometerBackground.getContext('2d');
             
+            // Установим размеры canvas
             speedometerBackground.width = speedometerBackground.clientWidth;
             speedometerBackground.height = speedometerBackground.clientHeight;
             
+            // Анимация фоновой дуги
             let progress = 0;
             const duration = 800;
             const startTime = Date.now();
@@ -1385,8 +1389,10 @@
                 const elapsed = currentTime - startTime;
                 progress = Math.min(elapsed / duration, 1);
                 
+                // Очищаем canvas
                 ctx.clearRect(0, 0, speedometerBackground.width, speedometerBackground.height);
                 
+                // Рисуем дугу
                 const centerX = speedometerBackground.width / 2;
                 const centerY = speedometerBackground.height;
                 const radius = Math.min(centerX, centerY) * 0.8;
@@ -1411,15 +1417,19 @@
         function createSpeedometer(score) {
             const ctx = speedometer.getContext('2d');
             
+            // Установим размеры canvas
             speedometer.width = speedometer.clientWidth;
             speedometer.height = speedometer.clientHeight;
             
+            // Get color for current score
             const color = scoreColors[score] || '#FFFFFF';
             
+            // Показываем цветную дугу с анимацией
             setTimeout(() => {
                 gaugeForeground.classList.add('visible');
             }, 300);
             
+            // Анимация цветной дуги
             let progress = 0;
             const duration = 1000;
             const startTime = Date.now();
@@ -1434,8 +1444,10 @@
                 const elapsed = currentTime - startTime;
                 progress = Math.min(elapsed / duration, 1);
                 
+                // Очищаем canvas
                 ctx.clearRect(0, 0, speedometer.width, speedometer.height);
                 
+                // Рисуем дугу
                 const currentAngle = startAngle + (maxAngle - startAngle) * progress;
                 
                 ctx.beginPath();
@@ -1444,6 +1456,7 @@
                 ctx.arc(centerX, centerY, radius, startAngle, currentAngle);
                 ctx.stroke();
                 
+                // Рисуем текст
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillStyle = 'white';
@@ -1466,19 +1479,24 @@
             const price = parseFloat(stock.price);
             const score = stock.score;
             
+            // Обновляем информационную панель
             infoCompany.textContent = stock.company;
             infoTicker.textContent = stock.ticker;
             infoPrice.textContent = isNaN(price) ? "N/A" : `$${price.toFixed(2)}`;
             infoScore.textContent = `${score}/9`;
             infoLabel.textContent = stock.label;
             
+            // Установка цвета для оценки
             const fillColor = scoreColors[score] || '#FFFFFF';
             infoLabel.style.color = fillColor;
             infoLabel.style.backgroundColor = fillColor + '20';
             
+            // Показываем результаты с анимацией
             resultContainer.style.display = 'flex';
             setTimeout(() => {
                 resultContainer.classList.add('visible');
+                
+                // Создаем спидометры ПОСЛЕ отображения контейнера
                 createSpeedometerBackground();
                 createSpeedometer(score);
             }, 10);
@@ -1581,6 +1599,7 @@
                     throw new Error("Excel file is empty!");
                 }
                 
+                // Normalize data
                 return jsonData.map(item => {
                     const normalizedItem = {};
                     for (const key in item) {
@@ -1594,63 +1613,72 @@
             }
         }
 
-        // Load initial data from points.xlsx in Supabase Storage
-        async function loadExcelFile() {
-            showDataStatus("Loading stock data from Supabase Storage...", "loading");
-            
-            try {
-                const fileUrl = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.xlsx';
-                
-                const response = await fetch(fileUrl);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const arrayBuffer = await response.arrayBuffer();
-                const jsonData = processExcelData(arrayBuffer);
-                
-                const lastModified = response.headers.get('last-modified');
-                const fileDate = formatFileDate(lastModified);
-                
-                stockData = jsonData.map(item => {
-                    let priceValue = item.price;
-                    if (typeof priceValue === 'string') {
-                        priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
-                    }
-                    priceValue = parseFloat(priceValue);
-                    
-                    let scoreValue = item.score;
-                    if (typeof scoreValue === 'string') {
-                        scoreValue = scoreValue.replace(/\D/g, '');
-                    }
-                    scoreValue = parseInt(scoreValue);
-                    
-                    return {
-                        ticker: item.ticker,
-                        company: item.company,
-                        price: isNaN(priceValue) ? 0 : priceValue,
-                        score: isNaN(scoreValue) ? 0 : scoreValue,
-                        label: item.label
-                    };
-                });
-                
-                console.log("Successfully loaded stocks:", stockData);
-                initTickerTape();
-                
-                lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
-                showDataStatus("Data loaded successfully!", "success");
-                
-                window.fileDate = fileDate;
-            } catch (error) {
-                const errorMsg = `Error loading data: ${error.message}`;
-                showDataStatus(errorMsg, "error");
-                lastUpdated.textContent = "Data load failed!";
-                console.error(errorMsg, error);
-                
-                loadSampleData();
-            }
+
+// Load initial data from points.xlsx in Supabase Storage
+async function loadExcelFile() {
+    showDataStatus("Loading stock data from Supabase Storage...", "loading");
+    
+ try {
+        // Используйте Supabase URL
+        const fileUrl = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.xlsx';
+        
+        const response = await fetch(fileUrl);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        const arrayBuffer = await response.arrayBuffer();
+        const jsonData = processExcelData(arrayBuffer);
+        
+        // Получаем дату изменения файла из заголовков
+        const lastModified = response.headers.get('last-modified');
+        const fileDate = formatFileDate(lastModified);
+        
+        // Process data
+        stockData = jsonData.map(item => {
+            // Convert price
+            let priceValue = item.price;
+            if (typeof priceValue === 'string') {
+                priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
+            }
+            priceValue = parseFloat(priceValue);
+            
+            // Convert score
+            let scoreValue = item.score;
+            if (typeof scoreValue === 'string') {
+                scoreValue = scoreValue.replace(/\D/g, '');
+            }
+            scoreValue = parseInt(scoreValue);
+            
+            return {
+                ticker: item.ticker,
+                company: item.company,
+                price: isNaN(priceValue) ? 0 : priceValue,
+                score: isNaN(scoreValue) ? 0 : scoreValue,
+                label: item.label
+            };
+        });
+        
+        console.log("Successfully loaded stocks:", stockData);
+        initTickerTape();
+        
+        // Обновляем текст с датой последнего обновления
+        lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
+        showDataStatus("Data loaded successfully!", "success");
+        
+        // Сохраняем дату для использования при загрузке sample data
+        window.fileDate = fileDate;
+    } catch (error) {
+        const errorMsg = `Error loading data: ${error.message}`;
+        showDataStatus(errorMsg, "error");
+        lastUpdated.textContent = "Data load failed!";
+        console.error(errorMsg, error);
+        
+        // Load sample data if real data fails
+        loadSampleData();
+    }
+}
 
         // Load sample data
         function loadSampleData() {
@@ -1669,79 +1697,87 @@
             
             initTickerTape();
             
+            // Используем сохраненную дату или текущую дату
             const fileDate = window.fileDate || formatFileDate(new Date());
             lastUpdated.textContent = `Sample data loaded (${fileDate})`;
             showDataStatus("Loaded sample data", "success");
         }
 
-        // Process uploaded Excel file and upload to Supabase
-        function processUploadedFile(file) {
-            showDataStatus("Processing uploaded file...", "loading");
-            
-            const reader = new FileReader();
-            
-            reader.onload = async function(e) {
-                try {
-                    const jsonData = processExcelData(e.target.result);
-                    
-                    stockData = jsonData.map(item => {
-                        let priceValue = item.price;
-                        if (typeof priceValue === 'string') {
-                            priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
-                        }
-                        priceValue = parseFloat(priceValue);
-                        
-                        let scoreValue = item.score;
-                        if (typeof scoreValue === 'string') {
-                            scoreValue = scoreValue.replace(/\D/g, '');
-                        }
-                        scoreValue = parseInt(scoreValue);
-                        
-                        return {
-                            ticker: item.ticker,
-                            company: item.company,
-                            price: isNaN(priceValue) ? 0 : priceValue,
-                            score: isNaN(scoreValue) ? 0 : scoreValue,
-                            label: item.label
-                        };
-                    });
-                    
-                    console.log("Uploaded stocks:", stockData);
-                    initTickerTape();
-                    
-                    const fileDate = formatFileDate(new Date());
-                    lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
-                    
-                    localStorage.setItem('stockData', JSON.stringify(stockData));
-                    
-                    try {
-                        await uploadToSupabase(file);
-                        showDataStatus("Data uploaded successfully!", "success");
-                        showModalMessage("Data uploaded successfully!", "success");
-                    } catch (uploadError) {
-                        showDataStatus("Data processed locally!", "success");
-                        showModalMessage("Data processed locally!", "success");
+    // Process uploaded Excel file and upload to Supabase - исправленная функция
+    function processUploadedFile(file) {
+        showDataStatus("Processing uploaded file...", "loading");
+        
+        const reader = new FileReader();
+        
+        reader.onload = async function(e) {
+            try {
+                const jsonData = processExcelData(e.target.result);
+                
+                // Process data
+                stockData = jsonData.map(item => {
+                    // Convert price
+                    let priceValue = item.price;
+                    if (typeof priceValue === 'string') {
+                        priceValue = priceValue.replace(',', '.').replace(/\s/g, '');
                     }
+                    priceValue = parseFloat(priceValue);
                     
-                    setTimeout(() => {
-                        adminPanelModal.style.display = 'none';
-                    }, 2000);
-                } catch (error) {
-                    const errorMsg = `Error processing file: ${error.message}`;
-                    showDataStatus(errorMsg, "error");
-                    showModalMessage(errorMsg, "error");
-                    console.error("File processing error:", error);
+                    // Convert score
+                    let scoreValue = item.score;
+                    if (typeof scoreValue === 'string') {
+                        scoreValue = scoreValue.replace(/\D/g, '');
+                    }
+                    scoreValue = parseInt(scoreValue);
+                    
+                    return {
+                        ticker: item.ticker,
+                        company: item.company,
+                        price: isNaN(priceValue) ? 0 : priceValue,
+                        score: isNaN(scoreValue) ? 0 : scoreValue,
+                        label: item.label
+                    };
+                });
+                
+                console.log("Uploaded stocks:", stockData);
+                initTickerTape();
+                
+                // Обновляем дату на текущую
+                const fileDate = formatFileDate(new Date());
+                lastUpdated.textContent = `Latest data calculated after market close on ${fileDate}`;
+                
+                // Save to localStorage as backup
+                localStorage.setItem('stockData', JSON.stringify(stockData));
+                
+                // Пытаемся загрузить в Supabase, но не блокируем процесс при ошибке
+                try {
+                    await uploadToSupabase(file);
+                    showDataStatus("Data uploaded successfully!", "success");
+                    showModalMessage("Data uploaded successfully!", "success");
+                } catch (uploadError) {
+                    // Если загрузка в Supabase не удалась, все равно продолжаем
+                    showDataStatus("Data processed locally!", "success");
+                    showModalMessage("Data processed locally!", "success");
                 }
-            };
-            
-            reader.onerror = function() {
-                const errorMsg = "Error reading file!";
+                
+                setTimeout(() => {
+                    adminPanelModal.style.display = 'none';
+                }, 2000);
+            } catch (error) {
+                const errorMsg = `Error processing file: ${error.message}`;
                 showDataStatus(errorMsg, "error");
                 showModalMessage(errorMsg, "error");
-            };
-            
-            reader.readAsArrayBuffer(file);
-        }
+                console.error("File processing error:", error);
+            }
+        };
+        
+        reader.onerror = function() {
+            const errorMsg = "Error reading file!";
+            showDataStatus(errorMsg, "error");
+            showModalMessage(errorMsg, "error");
+        };
+        
+        reader.readAsArrayBuffer(file);
+    }
 
         // Auth functions
         function loginUser(email, password) {
@@ -1759,16 +1795,19 @@
         }
 
         function registerUser(name, email, password) {
+            // Check if user already exists
             if (users.some(u => u.email === email)) {
                 showModalMessage("User with this email already exists", "error");
                 return false;
             }
             
+            // Simple password validation
             if (password.length < 6) {
                 showModalMessage("Password must be at least 6 characters", "error");
                 return false;
             }
             
+            // Add new user
             const newUser = {
                 name: name,
                 email: email,
@@ -1789,6 +1828,7 @@
             const user = users.find(u => u.email === email);
             
             if (user) {
+                // In a real app, send an email with reset link
                 showModalMessage(`Password reset link sent to ${email}`, "success");
                 setTimeout(() => {
                     authModal.style.display = 'none';
@@ -1800,10 +1840,10 @@
             return false;
         }
         
-        // Load methodology text from Supabase Storage
+        // Load methodology text from external file
         async function loadMethodologyText() {
             try {
-                const response = await fetch('https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/Methodology.txt');
+const response = await fetch('Methodology.txt');
                 if (!response.ok) {
                     throw new Error(`Failed to load methodology: ${response.status}`);
                 }
@@ -1831,52 +1871,56 @@
             }
         }
         
-        // Load How to Use text from Supabase Storage
-        async function loadHowtoText() {
-            try {
-                const cacheBuster = `?t=${new Date().getTime()}`;
-                
-                const pointsResponse = await fetch(`https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/points.txt${cacheBuster}`);
-                if (!pointsResponse.ok) throw new Error(`Failed to load points text: ${pointsResponse.status}`);
-                const pointsTextContent = await pointsResponse.text();
-                pointsText.innerHTML = pointsTextContent.replace(/\n/g, '<br>');
-                
-                const finvizResponse = await fetch(`https://hfqtqjjsagwcbhyzzrnp.supabase.co/storage/v1/object/public/uploads/finviz.txt${cacheBuster}`);
-                if (!finvizResponse.ok) throw new Error(`Failed to load finviz text: ${finvizResponse.status}`);
-                const finvizTextContent = await finvizResponse.text();
-                finvizText.innerHTML = finvizTextContent.replace(/\n/g, '<br>');
-            } catch (error) {
-                console.error("Error loading howto text:", error);
-                pointsText.innerHTML = `
-                    <h3>Understanding the Points System</h3>
-                    <p>Our 1-9 point valuation system provides a quick assessment of a stock's relative value:</p>
-                    <ul>
-                        <li><strong>1-3 points</strong> indicate the stock is overvalued</li>
-                        <li><strong>4-6 points</strong> indicate fair value</li>
-                        <li><strong>7-9 points</strong> indicate undervaluation</li>
-                    </ul>
-                    <p>This simple scale allows you to quickly identify investment opportunities without complex calculations.</p>
-                `;
-                
-                finvizText.innerHTML = `
-                    <h3>Integrating with Finviz Screener</h3>
-                    <p>For advanced screening, you can export our valuation data and import it into Finviz:</p>
-                    <ol>
-                        <li>Click the "Download Excel Data" button</li>
-                        <li>Open the downloaded file in Excel</li>
-                        <li>Copy the ticker symbols and valuation scores</li>
-                        <li>Paste into Finviz's custom screener</li>
-                        <li>Filter by score range to find undervalued opportunities</li>
-                    </ol>
-                    <p>This integration allows you to combine our valuation metrics with Finviz's powerful technical and fundamental screening capabilities.</p>
-                `;
-            }
-        }
+        // Загрузка текста для раздела How to Use
+async function loadHowtoText() {
+    try {
+        // Добавляем параметр для обхода кэша
+        const cacheBuster = `?t=${new Date().getTime()}`;
+        
+        // Загрузка первого текста (points.txt)
+const pointsResponse = await fetch(`points.txt${cacheBuster}`);
+        if (!pointsResponse.ok) throw new Error(`Failed to load points text: ${pointsResponse.status}`);
+        const pointsTextContent = await pointsResponse.text();
+        pointsText.innerHTML = pointsTextContent.replace(/\n/g, '<br>');
+        
+        // Загрузка второго текста (finviz.txt)
+const finvizResponse = await fetch(`finviz.txt${cacheBuster}`);
+        if (!finvizResponse.ok) throw new Error(`Failed to load finviz text: ${finvizResponse.status}`);
+        const finvizTextContent = await finvizResponse.text();
+        finvizText.innerHTML = finvizTextContent.replace(/\n/g, '<br>');
+    } catch (error) {
+        console.error("Error loading howto text:", error);
+        // Fallback content
+        pointsText.innerHTML = `
+            <h3>Understanding the Points System</h3>
+            <p>Our 1-9 point valuation system provides a quick assessment of a stock's relative value:</p>
+            <ul>
+                <li><strong>1-3 points</strong> indicate the stock is overvalued</li>
+                <li><strong>4-6 points</strong> indicate fair value</li>
+                <li><strong>7-9 points</strong> indicate undervaluation</li>
+            </ul>
+            <p>This simple scale allows you to quickly identify investment opportunities without complex calculations.</p>
+        `;
+        
+        finvizText.innerHTML = `
+            <h3>Integrating with Finviz Screener</h3>
+            <p>For advanced screening, you can export our valuation data and import it into Finviz:</p>
+            <ol>
+                <li>Click the "Download Excel Data" button</li>
+                <li>Open the downloaded file in Excel</li>
+                <li>Copy the ticker symbols and valuation scores</li>
+                <li>Paste into Finviz's custom screener</li>
+                <li>Filter by score range to find undervalued opportunities</li>
+            </ol>
+            <p>This integration allows you to combine our valuation metrics with Finviz's powerful technical and fundamental screening capabilities.</p>
+        `;
+    }
+}
         
         // Show methodology section
         function showMethodology() {
             mainContent.style.display = 'none';
-            howtoContainer.style.display = 'none';
+            howtoContainer.style.display = 'none'; // Скрыть раздел How to Use
             methodologyContainer.style.display = 'block';
             setTimeout(() => {
                 methodologyContainer.classList.add('visible');
@@ -1895,7 +1939,7 @@
         // Show How to Use section
         function showHowto() {
             mainContent.style.display = 'none';
-            methodologyContainer.style.display = 'none';
+            methodologyContainer.style.display = 'none'; // Скрыть раздел методологии
             howtoContainer.style.display = 'block';
             setTimeout(() => {
                 howtoContainer.classList.add('visible');
@@ -1909,87 +1953,6 @@
                 howtoContainer.style.display = 'none';
                 mainContent.style.display = 'flex';
             }, 500);
-        }
-
-        // Upload file to Supabase Storage
-        async function uploadToSupabase(file) {
-            try {
-                console.log("Starting upload to Supabase...");
-                
-                if (!window.supabase) {
-                    throw new Error('Supabase library not loaded');
-                }
-                
-                const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-                
-                const { data, error } = await supabaseClient.storage
-                    .from('uploads')
-                    .upload('points.xlsx', file, {
-                        cacheControl: '3600',
-                        upsert: true
-                    });
-                
-                if (error) {
-                    console.error('Supabase upload error:', error);
-                    throw new Error(`Upload failed: ${error.message}`);
-                }
-                
-                console.log("File uploaded to Supabase successfully:", data);
-                return true;
-            } catch (error) {
-                console.error("Supabase upload error:", error);
-                showDataStatus("Data processed locally, but cloud upload failed", "error");
-                return false;
-            }
-        }
-
-        // Check image loading
-        function checkImageLoading() {
-            const images = document.querySelectorAll('.content-image');
-            console.log(`Found ${images.length} images to check`);
-            
-            images.forEach((img, index) => {
-                console.log(`Image ${index + 1}: ${img.src}`);
-                
-                if (img.complete) {
-                    if (img.naturalHeight === 0) {
-                        console.error(`Image failed to load: ${img.src}`);
-                        handleImageError(img);
-                    } else {
-                        console.log(`Image already loaded: ${img.src}`);
-                    }
-                } else {
-                    img.onload = function() {
-                        console.log(`✓ Image loaded successfully: ${img.src}`);
-                    };
-                    img.onerror = function() {
-                        console.error(`✗ Failed to load image: ${img.src}`);
-                        handleImageError(img);
-                    };
-                }
-            });
-        }
-
-        function handleImageError(img) {
-            img.style.display = 'none';
-            const caption = img.nextElementSibling;
-            if (caption && caption.classList.contains('image-caption')) {
-                caption.textContent = 'Image not available: ' + img.alt;
-                caption.style.color = 'var(--orange)';
-                caption.style.fontWeight = 'bold';
-            }
-        }
-
-        // Initialize the page
-        function init() {
-            loadExcelFile();
-            updateAuthUI();
-            loadMethodologyText();
-            loadHowtoText();
-            
-            setTimeout(() => {
-                checkImageLoading();
-            }, 2000);
         }
 
         // Event Listeners
@@ -2024,6 +1987,7 @@
             }, 500);
         });
         
+        // Methodology event listeners
         methodologyLink.addEventListener('click', function(e) {
             e.preventDefault();
             showMethodology();
@@ -2033,6 +1997,7 @@
             hideMethodology();
         });
         
+        // How to Use event listeners
         howtoLink.addEventListener('click', function(e) {
             e.preventDefault();
             showHowto();
@@ -2042,6 +2007,7 @@
             hideHowto();
         });
         
+        // Auth event listeners
         adminLoginBtn.addEventListener('click', function() {
             if (currentUser && currentUser.role === "admin") {
                 adminPanelModal.style.display = 'flex';
@@ -2060,8 +2026,8 @@
         });
         
         loginBtn.addEventListener('click', function() {
-            const email = loginEmail.value.trim();
-            const password = loginPassword.value;
+            const email = authEmail.value.trim();
+            const password = authPassword.value;
             
             if (!email || !password) {
                 showModalMessage("Please fill in all fields", "error");
@@ -2072,10 +2038,10 @@
         });
         
         registerBtn.addEventListener('click', function() {
-            const name = registerName.value.trim();
-            const email = registerEmail.value.trim();
-            const password = registerPassword.value;
-            const passwordConfirm = registerPasswordConfirm.value;
+            const name = regName.value.trim();
+            const email = regEmail.value.trim();
+            const password = regPassword.value;
+            const passwordConfirm = regPasswordConfirm.value;
             
             if (!name || !email || !password || !passwordConfirm) {
                 showModalMessage("Please fill in all fields", "error");
@@ -2175,6 +2141,97 @@
             forgotForm.style.display = 'block';
             modalAuthTitle.textContent = "Reset Your Password";
         }
+
+        // Initialize the page
+function init() {
+    // Load data
+    loadExcelFile();
+    updateAuthUI();
+    loadMethodologyText();
+    loadHowtoText(); // Загрузка текста для раздела How to Use
+    
+    // Проверка загрузки изображений с задержкой
+    setTimeout(() => {
+        checkImageLoading();
+     }, 2000);
+}
+
+function checkImageLoading() {
+    const images = document.querySelectorAll('.content-image');
+    console.log(`Found ${images.length} images to check`);
+    
+    images.forEach((img, index) => {
+        console.log(`Image ${index + 1}: ${img.src}`);
+        
+        if (img.complete) {
+            if (img.naturalHeight === 0) {
+                console.error(`Image failed to load: ${img.src}`);
+                handleImageError(img);
+            } else {
+                console.log(`Image already loaded: ${img.src}`);
+            }
+        } else {
+            img.onload = function() {
+                console.log(`✓ Image loaded successfully: ${img.src}`);
+            };
+            img.onerror = function() {
+                console.error(`✗ Failed to load image: ${img.src}`);
+                handleImageError(img);
+            };
+        }
+    });
+}
+
+function handleImageError(img) {
+    img.style.display = 'none';
+    const caption = img.nextElementSibling;
+    if (caption && caption.classList.contains('image-caption')) {
+        caption.textContent = 'Image not available: ' + img.alt;
+        caption.style.color = 'var(--orange)';
+        caption.style.fontWeight = 'bold';
+    }
+}
+
+    // Upload file to Supabase Storage - ОДНА функция вместо двух одинаковых
+    async function uploadToSupabase(file) {
+        try {
+            console.log("Starting upload to Supabase...");
+            
+            // Проверяем, доступен ли Supabase
+            if (!window.supabase) {
+                throw new Error('Supabase library not loaded');
+            }
+            
+            // Создаем клиент
+            const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            
+            // Upload file to Supabase Storage
+            const { data, error } = await supabaseClient.storage
+                .from('uploads')
+                .upload('points.xlsx', file, {
+                    cacheControl: '3600',
+                    upsert: true
+                });
+            
+            if (error) {
+                console.error('Supabase upload error:', error);
+                throw new Error(`Upload failed: ${error.message}`);
+            }
+            
+            console.log("File uploaded to Supabase successfully:", data);
+            return true;
+        } catch (error) {
+            console.error("Supabase upload error:", error);
+            // Не прерываем выполнение, просто логируем ошибку
+            showDataStatus("Data processed locally, but cloud upload failed", "error");
+            return false; // Возвращаем false, но не прерываем процесс
+        }
+    }
+
+
+// Вызовите эту функцию после init()
+//setTimeout(debugImageLoading, 2000);
+
 
         window.addEventListener('DOMContentLoaded', init);
     </script>
