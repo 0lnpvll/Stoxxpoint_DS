@@ -1067,10 +1067,9 @@
                     <button class="modal-btn upload-btn" id="loginBtn">Log In</button>
                 </div>
                 
-                <div class="auth-links">
-                    <a href="#" id="switchToRegister">Not registered yet? Join Now</a>
-                    <a href="#" id="switchToForgot">Forgot your password? Click Here</a>
-                </div>
+<div class="auth-links">
+    <a href="#" id="switchToRegister">Not registered yet? Join Now</a>
+</div>
             </div>
             
             <!-- Форма регистрации -->
@@ -1105,26 +1104,6 @@
                 </div>
             </div>
             
-            <!-- Форма восстановления пароля -->
-            <div id="forgotForm" style="display: none;">
-                <div class="input-group">
-                    <label for="forgotEmail">Email Address</label>
-                    <input type="email" id="forgotEmail" placeholder="Enter your email">
-                </div>
-                
-                <p style="color: var(--light-gray); margin-bottom: 20px; text-align: center;">
-                    We'll send a password reset link to your email
-                </p>
-                
-                <div class="modal-buttons">
-                    <button class="modal-btn cancel-btn" id="cancelForgotBtn">Cancel</button>
-                    <button class="modal-btn upload-btn" id="sendResetBtn">Send Reset Link</button>
-                </div>
-                
-                <div class="auth-links">
-                    <a href="#" id="switchToLoginFromForgot">Back to Log In</a>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -1187,22 +1166,16 @@
         const cancelBtn = document.getElementById('cancelBtn');
         const switchToRegister = document.getElementById('switchToRegister');
         const switchToLogin = document.getElementById('switchToLogin');
-        const switchToForgot = document.getElementById('switchToForgot');
-        const switchToLoginFromForgot = document.getElementById('switchToLoginFromForgot');
         const registerName = document.getElementById('registerName');
         const registerEmail = document.getElementById('registerEmail');
         const registerPassword = document.getElementById('registerPassword');
         const registerPasswordConfirm = document.getElementById('registerPasswordConfirm');
         const registerBtn = document.getElementById('registerBtn');
         const cancelRegBtn = document.getElementById('cancelRegBtn');
-        const forgotEmail = document.getElementById('forgotEmail');
-        const sendResetBtn = document.getElementById('sendResetBtn');
-        const cancelForgotBtn = document.getElementById('cancelForgotBtn');
         const modalErrorMessage = document.getElementById('modalErrorMessage');
         const modalSuccessMessage = document.getElementById('modalSuccessMessage');
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
-        const forgotForm = document.getElementById('forgotForm');
         const modalAuthTitle = document.getElementById('modalAuthTitle');
         const excelFile = document.getElementById('excelFile');
         const uploadBtn = document.getElementById('uploadBtn');
@@ -1211,6 +1184,9 @@
 
         const SUPABASE_URL = 'https://hfqtqjjsagwcbhyzzrnp.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhmcXRxampzYWd3Y2JoeXp6cm5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjM1MDY0NjQsImV4cCI6MjAzOTA4MjQ2NH0.0LJ6N2u7eUT0lU6Deez5p6lJ9jNwL7pzN8n7J8lZ7kI';
+const supabaseClient = window.supabase ? 
+    window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : 
+    null;
 
         // Проверяем, что Supabase доступен глобально
         let supabase;
@@ -1228,20 +1204,61 @@
         }
 
         // Current dataset and user management
-        let stockData = [];
-        let currentUser = null;
-        const users = JSON.parse(localStorage.getItem('stoxxpointUsers') || '[]');
-        const adminPass = "admin123";
-        
-        if (!users.some(u => u.email === "admin@stoxxpoint.com")) {
-            users.push({
-                name: "Administrator",
-                email: "admin@stoxxpoint.com",
-                password: adminPass,
-                role: "admin"
-            });
-            localStorage.setItem('stoxxpointUsers', JSON.stringify(users));
+let stockData = [];
+let currentUser = null;
+
+// Simple user management for testing
+function initUsers() {
+    const users = JSON.parse(localStorage.getItem('stoxxpointUsers') || '[]');
+    
+    // Create admin user if doesn't exist
+    if (!users.some(u => u.email === "admin@stoxxpoint.com")) {
+        users.push({
+            name: "Administrator",
+            email: "admin@stoxxpoint.com", 
+            password: "admin123",
+            role: "admin"
+        });
+        localStorage.setItem('stoxxpointUsers', JSON.stringify(users));
+    }
+    
+    return users;
+}
+
+const users = initUsers();
+
+
+// Supabase Statistics Tracking
+async function logStatistic(type) {
+    try {
+        if (!window.supabase) {
+            console.log('Supabase not available, skipping statistic:', type);
+            return;
         }
+
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        const statisticData = {
+            event_type: type,
+            user_id: currentUser ? currentUser.email : 'anonymous',
+            user_email: currentUser ? currentUser.email : 'anonymous',
+            created_at: new Date().toISOString()
+        };
+
+        const { data, error } = await supabaseClient
+            .from('statistics')
+            .insert([statisticData]);
+
+        if (error) {
+            console.error('Error logging statistic:', error);
+            return;
+        }
+        
+        console.log('Statistic logged:', type);
+    } catch (error) {
+        console.error('Error in logStatistic:', error);
+    }
+}
 
         // Score labels mapping
         const scoreLabels = {
@@ -1294,17 +1311,26 @@
         }
 
         // Обновление UI в зависимости от статуса пользователя
-        function updateAuthUI() {
-            if (currentUser) {
-                if (currentUser.role === "admin") {
-                    adminLoginBtn.innerHTML = `<i class="fas fa-user-cog"></i> Admin Panel`;
-                } else {
-                    adminLoginBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.name}`;
-                }
-            } else {
-                adminLoginBtn.innerHTML = "Log In / Sign Up";
-            }
+function updateAuthUI() {
+    if (currentUser) {
+        if (currentUser.role === "admin") {
+            adminLoginBtn.innerHTML = `<i class="fas fa-user-cog"></i> Admin Panel`;
+        } else {
+            adminLoginBtn.innerHTML = `<i class="fas fa-user"></i> ${currentUser.name}`;
         }
+        
+        // Update download button for logged in users
+        downloadBtn.innerHTML = `<i class="fas fa-download"></i> Download Excel Data`;
+        downloadBtn.style.opacity = "1";
+    } else {
+        adminLoginBtn.innerHTML = "Log In / Sign Up";
+        
+        // Grey out download button for non-logged in users
+        downloadBtn.innerHTML = `<i class="fas fa-lock"></i> Login to Download`;
+        downloadBtn.style.opacity = "0.7";
+    }
+}
+
 
         // Initialize ticker tape
         function initTickerTape() {
@@ -1488,66 +1514,81 @@
             }
         }
 
-        // Improved search function
-        function searchStock(query) {
-            if (!query.trim()) return;
-            
-            const normalizedQuery = query.trim().toUpperCase();
-            let foundStock = null;
-            
-            if (normalizedQuery.length <= 4) {
-                foundStock = stockData.find(stock => 
-                    stock.ticker.toUpperCase().includes(normalizedQuery)
-                );
-            } else {
-                foundStock = stockData.find(stock => 
-                    stock.company.toUpperCase().includes(normalizedQuery)
-                );
-            }
-            
-            if (foundStock) {
-                displayStockResult(foundStock);
-            } else {
-                errorMessage.textContent = `${query} is not supported or not listed in our database`;
-                errorMessage.style.display = 'block';
-                resultContainer.style.display = 'none';
-                
-                setTimeout(() => {
-                    errorMessage.style.display = 'none';
-                }, 5000);
-            }
-        }
+// Improved search function
+function searchStock(query) {
+    if (!query.trim()) return;
+    
+    // Log search statistic
+    logStatistic('search');
+    
+    const normalizedQuery = query.trim().toUpperCase();
+    let foundStock = null;
+    
+    if (normalizedQuery.length <= 4) {
+        foundStock = stockData.find(stock => 
+            stock.ticker.toUpperCase().includes(normalizedQuery)
+        );
+    } else {
+        foundStock = stockData.find(stock => 
+            stock.company.toUpperCase().includes(normalizedQuery)
+        );
+    }
+    
+    if (foundStock) {
+        displayStockResult(foundStock);
+    } else {
+        errorMessage.textContent = `${query} is not supported or not listed in our database`;
+        errorMessage.style.display = 'block';
+        resultContainer.style.display = 'none';
+        
+        setTimeout(() => {
+            errorMessage.style.display = 'none';
+        }, 5000);
+    }
+}
 
         // Download data as Excel
-        function downloadData() {
-            try {
-                if (stockData.length === 0) {
-                    alert("No data available to download");
-                    return;
-                }
-                
-                const wb = XLSX.utils.book_new();
-                const wsData = [
-                    ["ticker", "company", "Price", "Score", "Label"],
-                    ...stockData.map(stock => [
-                        stock.ticker, 
-                        stock.company, 
-                        stock.price, 
-                        stock.score, 
-                        stock.label
-                    ])
-                ];
-                
-                const ws = XLSX.utils.aoa_to_sheet(wsData);
-                XLSX.utils.book_append_sheet(wb, ws, "Stock Ratings");
-                XLSX.writeFile(wb, "points.xlsx");
-                alert("File downloaded successfully!");
-            } catch (error) {
-                alert("Error generating Excel file");
-                console.error("Download error:", error);
-            }
-        }
 
+function downloadData() {
+    // Check if user is logged in
+    if (!currentUser) {
+        showModalMessage("Please log in to download data", "error");
+        authModal.style.display = 'flex';
+        showLoginForm();
+        return;
+    }
+    
+    // Log download statistic
+    logStatistic('download');
+    
+    // Rest of download code...
+    try {
+        if (stockData.length === 0) {
+            alert("No data available to download");
+            return;
+        }
+        
+        const wb = XLSX.utils.book_new();
+        const wsData = [
+            ["ticker", "company", "Price", "Score", "Label"],
+            ...stockData.map(stock => [
+                stock.ticker, 
+                stock.company, 
+                stock.price, 
+                stock.score, 
+                stock.label
+            ])
+        ];
+        
+        const ws = XLSX.utils.aoa_to_sheet(wsData);
+        XLSX.utils.book_append_sheet(wb, ws, "Stock Ratings");
+        XLSX.writeFile(wb, "points.xlsx");
+        alert("File downloaded successfully!");
+    } catch (error) {
+        alert("Error generating Excel file");
+        console.error("Download error:", error);
+    }
+}
         // Show modal message
         function showModalMessage(message, type) {
             if (type === "error") {
@@ -1744,61 +1785,53 @@
         }
 
         // Auth functions
-        function loginUser(email, password) {
-            const user = users.find(u => u.email === email && u.password === password);
-            
-            if (user) {
-                currentUser = user;
-                updateAuthUI();
-                authModal.style.display = 'none';
-                showModalMessage("Login successful! Welcome back.", "success");
-                return true;
-            }
-            showModalMessage("Invalid email or password", "error");
-            return false;
-        }
+function loginUser(email, password) {
+    const user = users.find(u => u.email === email && u.password === password);
+    
+    if (user) {
+        currentUser = user;
+        updateAuthUI();
+        authModal.style.display = 'none';
+        showModalMessage("Login successful! Welcome back.", "success");
+        
+        // Log statistic to Supabase
+        logStatistic('login');
+        return true;
+    }
+    showModalMessage("Invalid email or password", "error");
+    return false;
+}
 
-        function registerUser(name, email, password) {
-            if (users.some(u => u.email === email)) {
-                showModalMessage("User with this email already exists", "error");
-                return false;
-            }
-            
-            if (password.length < 6) {
-                showModalMessage("Password must be at least 6 characters", "error");
-                return false;
-            }
-            
-            const newUser = {
-                name: name,
-                email: email,
-                password: password,
-                role: "user"
-            };
-            
-            users.push(newUser);
-            localStorage.setItem('stoxxpointUsers', JSON.stringify(users));
-            currentUser = newUser;
-            updateAuthUI();
-            authModal.style.display = 'none';
-            showModalMessage("Registration successful! Welcome to STOXXPOINT.", "success");
-            return true;
-        }
+function registerUser(name, email, password) {
+    if (users.some(u => u.email === email)) {
+        showModalMessage("User with this email already exists", "error");
+        return false;
+    }
+    
+    if (password.length < 6) {
+        showModalMessage("Password must be at least 6 characters", "error");
+        return false;
+    }
+    
+    const newUser = {
+        name: name,
+        email: email,
+        password: password,
+        role: "user"
+    };
+    
+    users.push(newUser);
+    localStorage.setItem('stoxxpointUsers', JSON.stringify(users));
+    currentUser = newUser;
+    updateAuthUI();
+    authModal.style.display = 'none';
+    showModalMessage("Registration successful! Welcome to STOXXPOINT.", "success");
+    
+    // Log statistic to Supabase
+    logStatistic('registration');
+    return true;
+}
 
-        function sendPasswordReset(email) {
-            const user = users.find(u => u.email === email);
-            
-            if (user) {
-                showModalMessage(`Password reset link sent to ${email}`, "success");
-                setTimeout(() => {
-                    authModal.style.display = 'none';
-                }, 3000);
-                return true;
-            }
-            
-            showModalMessage("No user found with this email", "error");
-            return false;
-        }
         
         // Load methodology text from Supabase Storage
         async function loadMethodologyText() {
@@ -1980,17 +2013,17 @@
             }
         }
 
-        // Initialize the page
-        function init() {
-            loadExcelFile();
-            updateAuthUI();
-            loadMethodologyText();
-            loadHowtoText();
-            
-            setTimeout(() => {
-                checkImageLoading();
-            }, 2000);
-        }
+// Initialize the page
+function init() {
+    loadExcelFile();
+    updateAuthUI();
+    loadMethodologyText();
+    loadHowtoText();
+    
+    setTimeout(() => {
+        checkImageLoading();
+    }, 2000);
+}
 
         // Event Listeners
         stockSearch.addEventListener('input', function() {
@@ -2090,16 +2123,6 @@
             registerUser(name, email, password);
         });
         
-        sendResetBtn.addEventListener('click', function() {
-            const email = forgotEmail.value.trim();
-            
-            if (!email) {
-                showModalMessage("Please enter your email", "error");
-                return;
-            }
-            
-            sendPasswordReset(email);
-        });
         
         switchToRegister.addEventListener('click', function(e) {
             e.preventDefault();
@@ -2111,23 +2134,11 @@
             showLoginForm();
         });
         
-        switchToForgot.addEventListener('click', function(e) {
-            e.preventDefault();
-            showForgotForm();
-        });
-        
-        switchToLoginFromForgot.addEventListener('click', function(e) {
-            e.preventDefault();
-            showLoginForm();
-        });
         
         cancelRegBtn.addEventListener('click', function() {
             authModal.style.display = 'none';
         });
         
-        cancelForgotBtn.addEventListener('click', function() {
-            authModal.style.display = 'none';
-        });
         
         uploadBtn.addEventListener('click', function() {
             const file = excelFile.files[0];
@@ -2158,24 +2169,15 @@
         function showLoginForm() {
             loginForm.style.display = 'block';
             registerForm.style.display = 'none';
-            forgotForm.style.display = 'none';
             modalAuthTitle.textContent = "Log In to STOXXPOINT";
         }
         
         function showRegisterForm() {
             loginForm.style.display = 'none';
             registerForm.style.display = 'block';
-            forgotForm.style.display = 'none';
             modalAuthTitle.textContent = "Create Your Account";
         }
         
-        function showForgotForm() {
-            loginForm.style.display = 'none';
-            registerForm.style.display = 'none';
-            forgotForm.style.display = 'block';
-            modalAuthTitle.textContent = "Reset Your Password";
-        }
-
         window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
